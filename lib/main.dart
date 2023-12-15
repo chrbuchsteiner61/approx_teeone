@@ -1,6 +1,7 @@
-import 'package:approx_teeone/clockWidget.dart';
+import 'package:approx_teeone/showResultWidget.dart';
+import 'package:approx_teeone/showTimeWidget.dart';
 import 'package:approx_teeone/simpleInputWidget.dart';
-//import 'package:approx_teeone/simpleInputWidget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -36,16 +37,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   DateTime currentTime = DateTime.now();
   DateTime approxTeeOne = DateTime.now();
   NumberFormat MinuteFormatter = new NumberFormat("00");
+
   // Uhrzeiten umgewandelt in Strings
   String uhrzeit = 'Knopf drücken';
   String showApproxTime = 'Zu berechnen';
   String tee = "1";
   String delta = "10";
   int playedTime = 60;
+
+  double containerHeight = 80;
 
   final TextStyle normalStyle = const TextStyle(
     fontSize: 24,
@@ -78,10 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
       delta = myController_abstand.text;
       tee = myController_tee.text;
       currentTime = DateTime.now();
-      uhrzeit = '${currentTime.hour}:${MinuteFormatter.format(currentTime.minute)}';
-      playedTime =  int.parse(delta) * int.parse(tee);
-      approxTeeOne = currentTime.subtract(Duration(minutes:playedTime));
-      showApproxTime = '${approxTeeOne.hour}:${MinuteFormatter.format(approxTeeOne.minute)}';
+      uhrzeit =
+          '${currentTime.hour}:${MinuteFormatter.format(currentTime.minute)}';
+      playedTime = int.parse(delta) * int.parse(tee);
+      approxTeeOne = currentTime.subtract(Duration(minutes: playedTime));
+      showApproxTime =
+          '${approxTeeOne.hour}:${MinuteFormatter.format(approxTeeOne.minute)}';
     });
   }
 
@@ -92,62 +97,55 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body:
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-             ClockWidget(text: 'Aktuell     ',
-                 normalStyle: normalStyle,
-                 resultStyle: resultStyle,
-                 uhrzeit: uhrzeit,
-                colorDeep: 200,),
-
-          SimpleInputWidget(text: 'Abstand:    ', normalStyle: normalStyle, resultStyle: resultStyle, aFunction: myController_abstand),
-            Container(
-            margin: const EdgeInsets.all(12.0),
-            height: 80.0,
-            color: Colors.green[600],
-            child:
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:
-              Row(children: <Widget> [
-                Text('Abschlag:   ', style: normalStyle,),
-                SizedBox(
-                  width: 30.0,
-                  child:
-                  TextField(
-                    style: resultStyle,
-                    controller: myController_tee,
-                  ),
-                ),
-              ]),
-      ),
-      ),
-            ClockWidget(text: 'approx. Spielzeit:   ', normalStyle: normalStyle,
-                resultStyle: resultStyle,
-                uhrzeit: playedTime.toString() +' Min.',
-              colorDeep: 800,
+            showTimeWidget(
+              text: 'Aktuell     ',
+              normalStyle: normalStyle,
+              resultStyle: resultStyle,
+              uhrzeit: uhrzeit,
+              colorDeep: 200,
+              containerHeight: containerHeight,
             ),
-      Container(
-        margin: const EdgeInsets.all(12.0),
-        height: 80.0,
-        color: Colors.orange[600],
-        child:
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:
-            Row(children: <Widget> [
-              Text('1. Abschlag:   ', style: normalStyle),
-              Text(showApproxTime, style: resultStyle),
-            ]),
-        ),
-      ),
+            SimpleInputWidget(
+              text: 'Abstand:    ',
+              normalStyle: normalStyle,
+              resultStyle: resultStyle,
+              aFunction: myController_abstand,
+              secondText: ' Min.',
+              colorDeep: 400,
+              containerHeight: containerHeight,
+            ),
+            SimpleInputWidget(
+              text: 'Abschlag:  ',
+              normalStyle: normalStyle,
+              resultStyle: resultStyle,
+              aFunction: myController_tee,
+              secondText: '',
+              colorDeep: 600,
+              containerHeight: containerHeight,
+            ),
+            showTimeWidget(
+              text: 'approx. Spielzeit:   ',
+              normalStyle: normalStyle,
+              resultStyle: resultStyle,
+              uhrzeit: playedTime.toString() + ' Min.',
+              colorDeep: 800,
+              containerHeight: containerHeight,
+            ),
+            showResultWidget(
+                text: '1. Abschlag:   ',
+                showApproxTime: showApproxTime,
+                normalStyle: normalStyle,
+                resultStyle: resultStyle,
+                aColor: Colors.orange[400],
+                containerHeight: containerHeight)
           ],
         ),
-        ),
+      ),
 
       floatingActionButton: Container(
         height: 100,
@@ -158,8 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: const Icon(Icons.sports_golf_sharp),
         ),
       ),
-       // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
-

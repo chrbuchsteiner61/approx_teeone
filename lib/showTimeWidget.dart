@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class ClockWidget extends StatelessWidget {
+class showTimeWidget extends StatelessWidget {
   final String text;
   final TextStyle normalStyle;
   final TextStyle resultStyle;
   final String uhrzeit;
   final int colorDeep;
+  final double containerHeight;
 
-  const ClockWidget({required this.text,
+  const showTimeWidget({required this.text,
     required this.normalStyle,
     required this.resultStyle,
     required this.uhrzeit,
-    required this.colorDeep});
+    required this.colorDeep,
+    required this.containerHeight,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return
-      Container(
+    return Container(
         margin: const EdgeInsets.all(8.0),
-        height: 80.0,
+        height: containerHeight,
         color: Colors.green[colorDeep],
         child:
         Padding(
