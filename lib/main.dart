@@ -51,13 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
   double containerHeight = 80;
 
   final TextStyle normalStyle = const TextStyle(
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: FontWeight.bold,
     color: Colors.black87,
   );
 
   final TextStyle resultStyle = const TextStyle(
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: FontWeight.bold,
     color: Colors.white70,
   );
@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         style: normalStyle),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
