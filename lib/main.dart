@@ -1,5 +1,5 @@
 import 'package:approx_teeone/showResultWidget.dart';
-import 'package:approx_teeone/showTimeWidget.dart';
+import 'package:approx_teeone/showATimeWidget.dart';
 import 'package:approx_teeone/simpleInputWidget.dart';
 
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   DateTime currentTime = DateTime.now();
   DateTime approxTeeOne = DateTime.now();
-  NumberFormat MinuteFormatter = new NumberFormat("00");
+  NumberFormat minuteFormatter = NumberFormat("00");
 
   // Uhrzeiten umgewandelt in Strings
   String uhrzeit = 'Knopf drücken';
@@ -62,13 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
     color: Colors.white70,
   );
 
-  final myController_abstand = TextEditingController();
-  final myController_tee = TextEditingController();
+  final myControllerAbstand = TextEditingController();
+  final myControllerTee = TextEditingController();
 
   @override
   void dispose() {
-    myController_abstand.dispose();
-    myController_tee.dispose();
+    myControllerAbstand.dispose();
+    myControllerTee.dispose();
     super.dispose();
   }
 
@@ -78,15 +78,15 @@ class _MyHomePageState extends State<MyHomePage> {
     // calculate time = current - difference
     // show time
     setState(() {
-      delta = myController_abstand.text;
-      tee = myController_tee.text;
+      delta = myControllerAbstand.text;
+      tee = myControllerTee.text;
       currentTime = DateTime.now();
       uhrzeit =
-          '${currentTime.hour}:${MinuteFormatter.format(currentTime.minute)}';
+          '${currentTime.hour}:${minuteFormatter.format(currentTime.minute)}';
       playedTime = int.parse(delta) * int.parse(tee);
       approxTeeOne = currentTime.subtract(Duration(minutes: playedTime));
       showApproxTime =
-          '${approxTeeOne.hour}:${MinuteFormatter.format(approxTeeOne.minute)}';
+          '${approxTeeOne.hour}:${minuteFormatter.format(approxTeeOne.minute)}';
     });
   }
 
@@ -95,46 +95,39 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(widget.title,
+        style: normalStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            showTimeWidget(
+            showATimeWidget(
               text: 'Aktuell     ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
               uhrzeit: uhrzeit,
-              aColor: Colors.green[200],
-              containerHeight: containerHeight,
             ),
             SimpleInputWidget(
               text: 'Abstand:    ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
-              aFunction: myController_abstand,
+              aFunction: myControllerAbstand,
               secondText: ' Min.',
-              colorDeep: 400,
-              containerHeight: containerHeight,
             ),
             SimpleInputWidget(
               text: 'Abschlag:  ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
-              aFunction: myController_tee,
+              aFunction: myControllerTee,
               secondText: '',
-              colorDeep: 600,
-              containerHeight: containerHeight,
             ),
-            showTimeWidget(
+            showATimeWidget(
               text: 'approx. Spielzeit:   ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
               uhrzeit: playedTime.toString() + ' Min.',
-              aColor: Colors.green[800],
-              containerHeight: containerHeight,
             ),
             showResultWidget(
                 text: '1. Abschlag:   ',

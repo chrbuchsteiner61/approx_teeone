@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 
 class aThemeWidget extends StatelessWidget {
   final Color? aColor;
-  final double containerHeight = 80.0;
+  final double containerHeight = 90.0;
   final Widget aChild;
+  final double inset = 8.0;
 
   const aThemeWidget({
     required this.aColor,
@@ -14,10 +15,10 @@ class aThemeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8.0),
+      margin: EdgeInsets.all(inset),
       height: containerHeight,
       color: aColor,
-      child: Padding(padding: const EdgeInsets.all(8.0),
+      child: Padding(padding: EdgeInsets.all(inset),
         child: aChild),
     );
   }
