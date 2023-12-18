@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
               normalStyle: normalStyle,
               resultStyle: resultStyle,
               uhrzeit: uhrzeit,
-              colorDeep: 200,
+              aColor: Colors.green[200],
               containerHeight: containerHeight,
             ),
             SimpleInputWidget(
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
               normalStyle: normalStyle,
               resultStyle: resultStyle,
               uhrzeit: playedTime.toString() + ' Min.',
-              colorDeep: 800,
+              aColor: Colors.green[800],
               containerHeight: containerHeight,
             ),
             showResultWidget(

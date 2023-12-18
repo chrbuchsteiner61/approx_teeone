@@ -1,3 +1,4 @@
+import 'package:approx_teeone/aThemeWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -9,7 +10,8 @@ class showResultWidget extends StatelessWidget {
   final Color? aColor;
   final double containerHeight;
 
-  const showResultWidget({required this.text,
+  const showResultWidget({
+    required this.text,
     required this.showApproxTime,
     required this.normalStyle,
     required this.resultStyle,
@@ -20,19 +22,11 @@ class showResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-      Container(
-        margin: const EdgeInsets.all(8.0),
-        height: containerHeight,
-        color: aColor,
-        child:
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:
-          Row(children: <Widget>[
-            Text(text, style: normalStyle),
-            Text(showApproxTime, style: resultStyle),
-          ]),
-        ),
+      aThemeWidget(aColor: aColor,
+        aChild: Row(children: <Widget>[
+        Text(text, style: normalStyle),
+        Text(showApproxTime, style: resultStyle),
+      ]),
       );
   }
 }
