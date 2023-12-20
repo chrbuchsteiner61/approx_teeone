@@ -1,3 +1,4 @@
+import 'package:approx_teeone/selectANumberWidget.dart';
 import 'package:approx_teeone/showResultWidget.dart';
 import 'package:approx_teeone/showATimeWidget.dart';
 import 'package:approx_teeone/simpleInputWidget.dart';
@@ -109,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
               resultStyle: resultStyle,
               uhrzeit: uhrzeit,
             ),
+            selectANumberWidget(normalStyle: normalStyle,),
             SimpleInputWidget(
               text: 'Abstand:    ',
               normalStyle: normalStyle,
