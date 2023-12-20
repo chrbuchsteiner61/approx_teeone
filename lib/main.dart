@@ -96,8 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title,
-        style: normalStyle),
+        title: Text(widget.title, style: normalStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -110,7 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
               resultStyle: resultStyle,
               uhrzeit: uhrzeit,
             ),
-            selectANumberWidget(normalStyle: normalStyle,),
+            selectANumberWidget(
+                normalStyle: normalStyle,
+                aColor: Colors.green[200],
+                text: 'Abstand:   ',
+                ),
             SimpleInputWidget(
               text: 'Abstand:    ',
               normalStyle: normalStyle,
