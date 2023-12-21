@@ -3,6 +3,8 @@ import 'package:approx_teeone/showResultWidget.dart';
 import 'package:approx_teeone/showATimeWidget.dart';
 import 'package:approx_teeone/simpleInputWidget.dart';
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -48,6 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String tee = "1";
   String delta = "10";
   int playedTime = 60;
+  List<String> list = <String>[' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.'];
+
+  String dropdownValue = "";
 
   double containerHeight = 80;
 
@@ -80,11 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
     // show time
     setState(() {
       delta = myControllerAbstand.text;
+      log(dropdownValue.replaceAll(' Min.',''));
       tee = myControllerTee.text;
       currentTime = DateTime.now();
       uhrzeit =
           '${currentTime.hour}:${minuteFormatter.format(currentTime.minute)}';
-      playedTime = int.parse(delta) * int.parse(tee);
+      playedTime = int.parse(delta.trimLeft()) * int.parse(tee);
       approxTeeOne = currentTime.subtract(Duration(minutes: playedTime));
       showApproxTime =
           '${approxTeeOne.hour}:${minuteFormatter.format(approxTeeOne.minute)}';
@@ -113,6 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 normalStyle: normalStyle,
                 aColor: Colors.green[200],
                 text: 'Abstand:   ',
+                dropdownValue: list[2],
                 ),
             SimpleInputWidget(
               text: 'Abstand:    ',

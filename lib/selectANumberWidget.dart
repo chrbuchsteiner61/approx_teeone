@@ -8,11 +8,13 @@ class selectANumberWidget extends StatefulWidget {
   final TextStyle normalStyle;
   final Color? aColor;
   final String text;
+  String dropdownValue;
 
-  const selectANumberWidget({super.key,
+  selectANumberWidget({super.key,
     required this.normalStyle,
     required this.aColor,
     required this.text,
+    required this.dropdownValue,
   });
 
   @override
@@ -20,6 +22,7 @@ class selectANumberWidget extends StatefulWidget {
         normalStyle: normalStyle,
         aColor: aColor,
         text: text,
+        dropdownValue: dropdownValue,
       );
 }
 
@@ -27,14 +30,15 @@ class _selectANumberWidgetState extends State<selectANumberWidget> {
   final TextStyle normalStyle;
   final Color? aColor;
   final String text;
+  String dropdownValue;
+
 
   _selectANumberWidgetState({
     required this.normalStyle,
     required this.aColor,
     required this.text,
+    required this.dropdownValue,
   });
-
-  String dropdownValue = list[3];
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +51,7 @@ class _selectANumberWidgetState extends State<selectANumberWidget> {
           child: DropdownButton<String>(
             value: dropdownValue,
             isExpanded: true,
-            icon: const Icon(Icons.arrow_drop_down_circle_outlined),
-            //elevation: 10,
+            icon: const Icon(Icons.arrow_drop_down_circle_rounded),
             style: const TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,
