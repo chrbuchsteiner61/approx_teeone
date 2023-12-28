@@ -36,25 +36,48 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState(
+        currentTime: DateTime.now(),
+        approxTeeOne: DateTime.now(),
+        minuteFormatter: NumberFormat("00"),
+        uhrzeit: 'Knopf drücken',
+        showApproxTime: 'Zu berechnen',
+        tee: "1",
+        delta: "10",
+        playedTime: 60,
+        startAbstaende: [' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.'],
+        containerHeight: 80,
+      );
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime currentTime = DateTime.now();
-  DateTime approxTeeOne = DateTime.now();
-  NumberFormat minuteFormatter = NumberFormat("00");
+  DateTime currentTime;
+  DateTime approxTeeOne;
+  NumberFormat minuteFormatter;
 
   // Uhrzeiten umgewandelt in Strings
-  String uhrzeit = 'Knopf drücken';
-  String showApproxTime = 'Zu berechnen';
-  String tee = "1";
-  String delta = "10";
-  int playedTime = 60;
-  List<String> list = <String>[' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.'];
+  String uhrzeit;
+  String showApproxTime;
+  String tee;
+  String delta;
+  int playedTime;
 
-  String dropdownValue = "";
+  List<String> startAbstaende;
 
-  double containerHeight = 80;
+  double containerHeight;
+
+  _MyHomePageState({
+    required this.currentTime,
+    required this.approxTeeOne,
+    required this.minuteFormatter,
+    required this.uhrzeit,
+    required this.showApproxTime,
+    required this.tee,
+    required this.delta,
+    required this.playedTime,
+    required this.startAbstaende,
+    required this.containerHeight,
+  });
 
   final TextStyle normalStyle = const TextStyle(
     fontSize: 26,
@@ -71,11 +94,20 @@ class _MyHomePageState extends State<MyHomePage> {
   final myControllerAbstand = TextEditingController();
   final myControllerTee = TextEditingController();
 
+  String selectedValue = ' 5 Min.';
+  String auswahl = '';
+
   @override
   void dispose() {
     myControllerAbstand.dispose();
     myControllerTee.dispose();
     super.dispose();
+  }
+
+  void callbackForDropdown(String data) {
+    setState(() {
+      auswahl = data;
+    });
   }
 
   void _operateTime() {
@@ -84,8 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // calculate time = current - difference
     // show time
     setState(() {
-      delta = myControllerAbstand.text;
-      log(dropdownValue.replaceAll(' Min.',''));
+      //delta = myControllerAbstand.text;
+      selectedValue = auswahl;
+      delta = selectedValue.replaceAll(' Min.', '');
       tee = myControllerTee.text;
       currentTime = DateTime.now();
       uhrzeit =
@@ -119,14 +152,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 normalStyle: normalStyle,
                 aColor: Colors.green[200],
                 text: 'Abstand:   ',
-                dropdownValue: list[2],
-                ),
-            SimpleInputWidget(
-              text: 'Abstand:    ',
-              normalStyle: normalStyle,
-              resultStyle: resultStyle,
-              aFunction: myControllerAbstand,
-              secondText: ' Min.',
+                list: startAbstaende,
+                dropdownValue: startAbstaende[2],
+                onChildChanged: (String data) {
+                  callbackForDropdown(data);},
             ),
             SimpleInputWidget(
               text: 'Abschlag:  ',

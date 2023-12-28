@@ -25,7 +25,7 @@ class SimpleInputWidget extends StatelessWidget {
       aChild: Row(children: <Widget>[
         Text(text, style: normalStyle),
         SizedBox(
-          width: 30.0,
+          width: 40.0,
           child: TextField(
             style: resultStyle,
             controller: aFunction,
