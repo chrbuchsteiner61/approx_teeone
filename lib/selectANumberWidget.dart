@@ -64,7 +64,7 @@ class _selectANumberWidgetState extends State<selectANumberWidget> {
           child: DropdownButton<String>(
             value: dropdownValue,
             isExpanded: true,
-            icon: const Icon(Icons.arrow_drop_down_circle_outlined, size: 48.0),
+            icon: const Icon(Icons.arrow_drop_down_circle_outlined, size: 48.0, color: Colors.white,),
             style: const TextStyle(
               fontSize: 26,
               fontWeight: FontWeight.bold,

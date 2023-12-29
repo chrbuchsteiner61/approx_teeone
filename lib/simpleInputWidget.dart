@@ -8,7 +8,7 @@ class SimpleInputWidget extends StatelessWidget {
   final TextStyle resultStyle;
   final TextEditingController aFunction;
   final String secondText;
-  final Color? aColor = Colors.green[200];
+  final Color? aColor = Colors.greenAccent[400];
 
   SimpleInputWidget({
     required this.text,

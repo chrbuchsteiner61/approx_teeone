@@ -7,7 +7,7 @@ class showATimeWidget extends StatelessWidget {
   final TextStyle normalStyle;
   final TextStyle resultStyle;
   final String uhrzeit;
-  final aColor = Colors.green[800];
+  final aColor = Colors.greenAccent[700];
 
   showATimeWidget({
     required this.text,

@@ -3,8 +3,6 @@ import 'package:approx_teeone/showResultWidget.dart';
 import 'package:approx_teeone/showATimeWidget.dart';
 import 'package:approx_teeone/simpleInputWidget.dart';
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -82,13 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextStyle normalStyle = const TextStyle(
     fontSize: 26,
     fontWeight: FontWeight.bold,
-    color: Colors.black87,
+    color: Colors.black,
   );
 
   final TextStyle resultStyle = const TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.bold,
-    color: Colors.white70,
+    color: Colors.white,
   );
 
   final myControllerAbstand = TextEditingController();
@@ -150,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             selectANumberWidget(
                 normalStyle: normalStyle,
-                aColor: Colors.green[200],
+                aColor: Colors.greenAccent[400],
                 text: 'Abstand:   ',
                 list: startAbstaende,
                 dropdownValue: startAbstaende[2],
@@ -175,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showApproxTime: showApproxTime,
                 normalStyle: normalStyle,
                 resultStyle: resultStyle,
-                aColor: Colors.orange[400],
+                aColor: Colors.deepOrangeAccent[400],
                 containerHeight: containerHeight)
           ],
         ),
@@ -187,7 +185,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FloatingActionButton(
           onPressed: _operateTime,
           tooltip: 'Starten',
-          child: const Icon(Icons.sports_golf_sharp, size: 60.0),
+          backgroundColor: Colors.greenAccent[400],
+          child: const Icon(Icons.sports_golf_sharp, size: 60.0, color: Colors.blue),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
