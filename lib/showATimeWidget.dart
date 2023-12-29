@@ -7,13 +7,14 @@ class showATimeWidget extends StatelessWidget {
   final TextStyle normalStyle;
   final TextStyle resultStyle;
   final String uhrzeit;
-  final aColor = Colors.greenAccent[700];
+  final aColor;
 
   showATimeWidget({
     required this.text,
     required this.normalStyle,
     required this.resultStyle,
     required this.uhrzeit,
+    required this.aColor,
   });
 
   @override

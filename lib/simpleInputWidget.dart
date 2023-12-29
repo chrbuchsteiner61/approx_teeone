@@ -8,7 +8,7 @@ class SimpleInputWidget extends StatelessWidget {
   final TextStyle resultStyle;
   final TextEditingController aFunction;
   final String secondText;
-  final Color? aColor = Colors.greenAccent[400];
+  final Color? aColor;
 
   SimpleInputWidget({
     required this.text,
@@ -16,6 +16,7 @@ class SimpleInputWidget extends StatelessWidget {
     required this.resultStyle,
     required this.aFunction,
     required this.secondText,
+    required this.aColor,
   });
 
   @override

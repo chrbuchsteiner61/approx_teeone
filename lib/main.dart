@@ -89,11 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
     color: Colors.white,
   );
 
+  Color? inputColor = Colors.green[500];
+  Color? timeColor = Colors.green[700];
+
   final myControllerAbstand = TextEditingController();
   final myControllerTee = TextEditingController();
 
-  String selectedValue = ' 5 Min.';
-  String auswahl = '';
+  String selectedValue = '';
+  String auswahl = '10 Min.';
 
   @override
   void dispose() {
@@ -145,10 +148,11 @@ class _MyHomePageState extends State<MyHomePage> {
               normalStyle: normalStyle,
               resultStyle: resultStyle,
               uhrzeit: uhrzeit,
+              aColor: timeColor,
             ),
             selectANumberWidget(
                 normalStyle: normalStyle,
-                aColor: Colors.greenAccent[400],
+                aColor: inputColor,
                 text: 'Abstand:   ',
                 list: startAbstaende,
                 dropdownValue: startAbstaende[2],
@@ -161,19 +165,21 @@ class _MyHomePageState extends State<MyHomePage> {
               resultStyle: resultStyle,
               aFunction: myControllerTee,
               secondText: '',
+              aColor: inputColor,
             ),
             showATimeWidget(
               text: 'approx. Spielzeit:   ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
               uhrzeit: playedTime.toString() + ' Min.',
+              aColor: timeColor,
             ),
             showResultWidget(
                 text: '1. Abschlag:   ',
                 showApproxTime: showApproxTime,
                 normalStyle: normalStyle,
                 resultStyle: resultStyle,
-                aColor: Colors.deepOrangeAccent[400],
+                aColor: Colors.orange[700],
                 containerHeight: containerHeight)
           ],
         ),
@@ -186,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _operateTime,
           tooltip: 'Starten',
           backgroundColor: Colors.greenAccent[400],
-          child: const Icon(Icons.sports_golf_sharp, size: 60.0, color: Colors.blue),
+          child: const Icon(Icons.sports_golf_sharp, size: 68.0, color: Colors.blue),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
