@@ -104,9 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  void callbackForDropdown(String data) {
+  void callbackForDropdown(String gewaehlterAbschlag) {
     setState(() {
-      auswahl = data;
+      auswahl = gewaehlterAbschlag;
     });
   }
 
@@ -154,8 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: 'Abstand:   ',
                 list: startAbstaende,
                 dropdownValue: startAbstaende[2],
-                onChildChanged: (String data) {
-                  callbackForDropdown(data);},
+                onChildChanged: (String auswahlInChild) {
+                  callbackForDropdown(auswahlInChild);},
             ),
             SimpleInputWidget(
               text: 'Abschlag:  ',
@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: FloatingActionButton(
           onPressed: _operateTime,
           tooltip: 'Starten',
-          child: const Icon(Icons.sports_golf_sharp),
+          child: const Icon(Icons.sports_golf_sharp, size: 60.0),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
