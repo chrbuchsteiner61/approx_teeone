@@ -42,7 +42,7 @@ class MyHomePage extends StatefulWidget {
         showApproxTime: 'Zu berechnen',
         tee: "1",
         delta: "10",
-        playedTime: 60,
+        playedTime: 0,
         startAbstaende: [' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.'],
         containerHeight: 80,
       );
@@ -98,6 +98,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedValue = '';
   String auswahl = '10 Min.';
 
+  String version = '1.2.0';
+
   @override
   void dispose() {
     myControllerAbstand.dispose();
@@ -116,6 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // calculate difference
     // calculate time = current - difference
     // show time
+    FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
       //delta = myControllerAbstand.text;
       selectedValue = auswahl;
@@ -150,6 +153,13 @@ class _MyHomePageState extends State<MyHomePage> {
               uhrzeit: uhrzeit,
               aColor: timeColor,
             ),
+            showResultWidget(
+                text: '1. Abschlag:   ',
+                showApproxTime: showApproxTime,
+                normalStyle: normalStyle,
+                resultStyle: resultStyle,
+                aColor: Colors.orange[700],
+                containerHeight: containerHeight),
             selectANumberWidget(
                 normalStyle: normalStyle,
                 aColor: inputColor,
@@ -174,13 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
               uhrzeit: playedTime.toString() + ' Min.',
               aColor: timeColor,
             ),
-            showResultWidget(
-                text: '1. Abschlag:   ',
-                showApproxTime: showApproxTime,
-                normalStyle: normalStyle,
-                resultStyle: resultStyle,
-                aColor: Colors.orange[700],
-                containerHeight: containerHeight)
+            Text(version),
           ],
         ),
       ),
