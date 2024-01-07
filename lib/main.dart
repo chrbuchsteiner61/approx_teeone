@@ -20,8 +20,10 @@ class MyApp extends StatelessWidget {
       title: 'Golf-App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        // fontFamily: 'Raleway',
         // fontFamily: Arial, Helvetica,
         useMaterial3: true,
+
       ),
       home: const MyHomePage(title: 'Erster Abschlag wann?'),
     );
@@ -43,7 +45,7 @@ class MyHomePage extends StatefulWidget {
         tee: "1",
         delta: "10",
         playedTime: 0,
-        startAbstaende: [' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.'],
+        startAbstaende: [' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.', '15 Min.'],
         containerHeight: 80,
       );
 }
@@ -98,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedValue = '';
   String auswahl = '10 Min.';
 
-  String version = '1.2.0';
+  String version = '1.2.1';
 
   @override
   void dispose() {
@@ -161,13 +163,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 aColor: Colors.orange[700],
                 containerHeight: containerHeight),
             selectANumberWidget(
-                normalStyle: normalStyle,
-                aColor: inputColor,
-                text: 'Abstand:   ',
-                list: startAbstaende,
-                dropdownValue: startAbstaende[2],
-                onChildChanged: (String auswahlInChild) {
-                  callbackForDropdown(auswahlInChild);},
+              normalStyle: normalStyle,
+              aColor: inputColor,
+              text: 'Abstand:   ',
+              list: startAbstaende,
+              dropdownValue: startAbstaende[2],
+              onChildChanged: (String auswahlInChild) {
+                callbackForDropdown(auswahlInChild);
+              },
             ),
             SimpleInputWidget(
               text: 'Abschlag:  ',
@@ -196,7 +199,8 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: _operateTime,
           tooltip: 'Starten',
           backgroundColor: Colors.greenAccent[400],
-          child: const Icon(Icons.sports_golf_sharp, size: 68.0, color: Colors.blue),
+          child: const Icon(Icons.sports_golf_sharp,
+              size: 68.0, color: Colors.blue),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
