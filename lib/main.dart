@@ -1,3 +1,4 @@
+import 'package:approx_teeone/loactionWidget.dart';
 import 'package:approx_teeone/selectANumberWidget.dart';
 import 'package:approx_teeone/showResultWidget.dart';
 import 'package:approx_teeone/showATimeWidget.dart';
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
       title: 'Golf-App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        // fontFamily: 'Raleway',
-        // fontFamily: Arial, Helvetica,
+        fontFamily: 'RadioCanada',
+
         useMaterial3: true,
 
       ),
@@ -81,13 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final TextStyle normalStyle = const TextStyle(
     fontSize: 26,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
     color: Colors.black,
   );
 
   final TextStyle resultStyle = const TextStyle(
     fontSize: 28,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
     color: Colors.white,
   );
 
@@ -100,7 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedValue = '';
   String auswahl = '10 Min.';
 
-  String version = '1.2.1';
+  String version = '1.3.0';
+  // location service added
 
   @override
   void dispose() {
@@ -187,6 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
               uhrzeit: playedTime.toString() + ' Min.',
               aColor: timeColor,
             ),
+            LocationWidget(),
             Text(version),
           ],
         ),
