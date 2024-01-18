@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:approx_teeone/aThemeWidget.dart';
+import 'package:approx_teeone/locationWidget.dart';
 import 'package:flutter/services.dart';
 
 class NumericalRangeFormatter extends TextInputFormatter {
@@ -11,10 +12,9 @@ class NumericalRangeFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue,
-      TextEditingValue newValue,
-      ) {
-
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     if (newValue.text == '') {
       return newValue;
     } else if (int.parse(newValue.text) < min) {
@@ -25,20 +25,18 @@ class NumericalRangeFormatter extends TextInputFormatter {
   }
 }
 
-class SimpleInputWidget extends StatelessWidget {
+class inputTeeWidget extends StatelessWidget {
   final String text;
   final TextStyle normalStyle;
   final TextStyle resultStyle;
   final TextEditingController aFunction;
-  final String secondText;
   final Color? aColor;
 
-  SimpleInputWidget({
+  inputTeeWidget({
     required this.text,
     required this.normalStyle,
     required this.resultStyle,
     required this.aFunction,
-    required this.secondText,
     required this.aColor,
   });
 
@@ -49,7 +47,7 @@ class SimpleInputWidget extends StatelessWidget {
       aChild: Row(children: <Widget>[
         Text(text, style: normalStyle),
         SizedBox(
-          width: 40.0,
+          width: 48.0,
           child: TextField(
             inputFormatters: [
               NumericalRangeFormatter(min: 1, max: 18),
@@ -59,10 +57,16 @@ class SimpleInputWidget extends StatelessWidget {
             keyboardType: TextInputType.number,
           ),
         ),
-        Text(
-          secondText,
-          style: normalStyle,
+        SizedBox(
+          width: 38.0,
+          child: Text(''),
         ),
+        LocationWidget(
+            // onPressed: getCurrentPosition,
+            // backgroundColor: Colors.white,
+            // child: const Text("Position",
+            // style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12),),
+            ),
       ]),
     );
   }

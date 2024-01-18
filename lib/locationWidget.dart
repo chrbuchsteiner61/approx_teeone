@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationWidget extends StatefulWidget {
-
   @override
   State<LocationWidget> createState() => _LocationWidgetState();
 }
@@ -54,18 +53,40 @@ class _LocationWidgetState extends State<LocationWidget> {
     });
   }
 
+  // vergleiche die Positionen aller Abschlaege mit der aktuellen Position
+  // erforderlich: lies alle Abschlagspositionen ein (sollte in main.dart initial geschehen)
+
+  Future<void> _getCurrentTee() async {
+  //Future<int> _getCurrentTee() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
-        Text('Breite: ${_currentPosition?.latitude ?? ""} Länge:  ${_currentPosition?.longitude ?? ""}',
-            style: normalStyle),
-        const SizedBox(height: 24),
-        ElevatedButton(
-          onPressed: _getCurrentPosition,
-          child: const Text("Aktuelle Position",
-            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),),
-        ),
+      children: [
+        Align(
+          alignment: Alignment.bottomRight,
+          child: IconButton(
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 36,
+            color: Colors.white,
+            onPressed: _getCurrentPosition,
+            ),
+          ),
+        Text('Breite: ${_currentPosition?.latitude ?? ""}',
+          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8),),
+        Text('Länge:  ${_currentPosition?.longitude ?? ""}',
+          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8),),
       ],
     );
   }

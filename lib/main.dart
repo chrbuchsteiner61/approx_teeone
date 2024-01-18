@@ -1,10 +1,11 @@
-import 'package:approx_teeone/loactionWidget.dart';
+import 'package:approx_teeone/locationWidget.dart';
 import 'package:approx_teeone/selectANumberWidget.dart';
 import 'package:approx_teeone/showResultWidget.dart';
 import 'package:approx_teeone/showATimeWidget.dart';
-import 'package:approx_teeone/simpleInputWidget.dart';
+import 'package:approx_teeone/inputTeeWidget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
 void main() {
@@ -101,8 +102,10 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedValue = '';
   String auswahl = '10 Min.';
 
-  String version = '1.3.0';
-  // location service added
+  String version = '1.3.2';
+  // location button adjusted
+
+  Position? aPosition;
 
   @override
   void dispose() {
@@ -174,12 +177,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 callbackForDropdown(auswahlInChild);
               },
             ),
-            SimpleInputWidget(
+            inputTeeWidget(
               text: 'Abschlag:  ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
               aFunction: myControllerTee,
-              secondText: '',
               aColor: inputColor,
             ),
             showATimeWidget(
@@ -189,13 +191,13 @@ class _MyHomePageState extends State<MyHomePage> {
               uhrzeit: playedTime.toString() + ' Min.',
               aColor: timeColor,
             ),
-            LocationWidget(),
+
             Text(version),
           ],
         ),
       ),
 
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         height: 100,
         width: 100,
         child: FloatingActionButton(
