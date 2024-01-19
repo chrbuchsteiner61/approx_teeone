@@ -7,8 +7,8 @@ class LocationWidget extends StatefulWidget {
 }
 
 class _LocationWidgetState extends State<LocationWidget> {
-  String? _currentAddress;
-  Position? _currentPosition;
+  // String? _currentAddress;
+  Position? currentPosition;
 
   TextStyle normalStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 
@@ -47,7 +47,7 @@ class _LocationWidgetState extends State<LocationWidget> {
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() => _currentPosition = position);
+      setState(() => currentPosition = position);
     }).catchError((e) {
       debugPrint(e);
     });
@@ -63,7 +63,7 @@ class _LocationWidgetState extends State<LocationWidget> {
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() => _currentPosition = position);
+      setState(() => currentPosition = position);
     }).catchError((e) {
       debugPrint(e);
     });
@@ -83,9 +83,9 @@ class _LocationWidgetState extends State<LocationWidget> {
             onPressed: _getCurrentPosition,
             ),
           ),
-        Text('Breite: ${_currentPosition?.latitude ?? ""}',
+        Text('Breite: ${currentPosition?.latitude ?? ""}',
           style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8),),
-        Text('Länge:  ${_currentPosition?.longitude ?? ""}',
+        Text('Länge:  ${currentPosition?.longitude ?? ""}',
           style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8),),
       ],
     );

@@ -5,17 +5,22 @@ import 'package:approx_teeone/showATimeWidget.dart';
 import 'package:approx_teeone/inputTeeWidget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
+import 'package:approx_teeone/logger.util.dart';
+import 'package:csv/csv.dart';
 
 void main() {
+  Logger.level = Level.debug;
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,9 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         fontFamily: 'RadioCanada',
-
         useMaterial3: true,
-
       ),
       home: const MyHomePage(title: 'Erster Abschlag wann?'),
     );
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+   const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -57,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   DateTime approxTeeOne;
   NumberFormat minuteFormatter;
 
-  // Uhrzeiten umgewandelt in Strings
+// Uhrzeiten umgewandelt in Strings
   String uhrzeit;
   String showApproxTime;
   String tee;
@@ -103,9 +106,53 @@ class _MyHomePageState extends State<MyHomePage> {
   String auswahl = '10 Min.';
 
   String version = '1.3.2';
-  // location button adjusted
+  bool test = true;
+
+  String testFile = 'assets/files/test_location.csv';
+  String rhgcFile = 'assets/files/rhgc_koordinaten.csv';
 
   Position? aPosition;
+
+  List<List<dynamic>> locationLatLon = [];
+
+  void readCSV(String file_name) async {
+    final rawdata = await rootBundle.loadString(file_name);
+    List<List<dynamic>> _listData = const CsvToListConverter().convert(rawdata);
+    setState(() {
+      locationLatLon = _listData;
+    });
+  }
+
+  String showNearestTee(
+      List<List<dynamic>> positionList, double lat, double lon) {
+
+    final log = getLogger();
+    String ergebnis = '1';
+    double distance = 1000000000.0;
+    double aPositionLat;
+    double aPositionLon;
+
+    int zeile = 0;
+    for (final positionOfATee in positionList) {
+      if (zeile > 0) {
+        var aTee = positionOfATee;
+
+        aPositionLat = aTee[1];
+        aPositionLon = aTee[2];
+
+        double calculatedDistance =
+            Geolocator.distanceBetween(aPositionLat, aPositionLon, lat, lon);
+
+        // if (calculatedDistance < distance) {
+        //  distance = calculatedDistance;
+        //  ergebnis = aTee[0];
+        //}
+      }
+      zeile = zeile + 1;
+    }
+
+    return ergebnis;
+  }
 
   @override
   void dispose() {
@@ -121,13 +168,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _operateTime() {
-    // get current time
-    // calculate difference
-    // calculate time = current - difference
-    // show time
+// get current time
+// calculate difference
+// calculate time = current - difference
+// show time
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
-      //delta = myControllerAbstand.text;
+//delta = myControllerAbstand.text;
       selectedValue = auswahl;
       delta = selectedValue.replaceAll(' Min.', '');
       tee = myControllerTee.text;
@@ -143,6 +190,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    readCSV(testFile);
+    // currentPosition.latitude and currentPosition.longitude
+    final currentTee = showNearestTee(locationLatLon, 130.0, -0.23);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -191,7 +242,8 @@ class _MyHomePageState extends State<MyHomePage> {
               uhrzeit: playedTime.toString() + ' Min.',
               aColor: timeColor,
             ),
-
+            Text(locationLatLon.toString()),
+            Text(currentTee),
             Text(version),
           ],
         ),
@@ -208,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
               size: 68.0, color: Colors.blue),
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
