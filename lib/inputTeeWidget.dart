@@ -61,12 +61,7 @@ class inputTeeWidget extends StatelessWidget {
           width: 38.0,
           child: Text(''),
         ),
-        LocationWidget(
-            // onPressed: getCurrentPosition,
-            // backgroundColor: Colors.white,
-            // child: const Text("Position",
-            // style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12),),
-            ),
+        LocationWidget(),
       ]),
     );
   }

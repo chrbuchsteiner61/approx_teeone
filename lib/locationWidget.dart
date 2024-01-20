@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:logger/logger.dart';
+import 'package:csv/csv.dart';
+
+import 'logger.util.dart';
 
 class LocationWidget extends StatefulWidget {
   @override
@@ -10,7 +15,7 @@ class _LocationWidgetState extends State<LocationWidget> {
   // String? _currentAddress;
   Position? currentPosition;
 
-  TextStyle normalStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
+  TextStyle normalStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white);
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -44,6 +49,9 @@ class _LocationWidgetState extends State<LocationWidget> {
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
 
+    Logger.level = Level.debug;
+    final log = getLogger();
+
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
@@ -51,13 +59,68 @@ class _LocationWidgetState extends State<LocationWidget> {
     }).catchError((e) {
       debugPrint(e);
     });
+
+    log.d(currentPosition);
+  }
+
+  bool test = true;
+
+  String testFile = 'assets/files/test_location.csv';
+  String rhgcFile = 'assets/files/rhgc_koordinaten.csv';
+
+  Position? aPosition;
+
+//initialize
+  List<List<dynamic>> locationLatLon = [
+    [0, 0.0, 0.0]
+  ];
+
+  void readCSV(String file_name) async {
+    final rawdata = await rootBundle.loadString(file_name);
+    List<List<dynamic>> _listData = const CsvToListConverter().convert(rawdata);
+    setState(() {
+      locationLatLon = _listData;
+    });
+  }
+
+  String showNearestTee(
+      List<List<dynamic>> positionList, double lat, double lon) {
+    final log = getLogger();
+
+    String _ergebnis = '1';
+    double distance = 1000000000.0;
+    double aPositionLat;
+    double aPositionLon;
+
+    int numberOfRows = positionList.length;
+    for (var i = 0; i < numberOfRows; i++) {
+      //for (final positionOfATee in positionList) {
+      if (i > 0) {
+        var aTee = positionList[i];
+
+        aPositionLat = aTee[1];
+        aPositionLon = aTee[2];
+
+        double calculatedDistance =
+            Geolocator.distanceBetween(aPositionLat, aPositionLon, lat, lon);
+
+        // log.d(calculatedDistance);
+
+        if (calculatedDistance < distance) {
+          distance = calculatedDistance;
+          _ergebnis = aTee[0].toString();
+        }
+      }
+    }
+
+    return _ergebnis;
   }
 
   // vergleiche die Positionen aller Abschlaege mit der aktuellen Position
   // erforderlich: lies alle Abschlagspositionen ein (sollte in main.dart initial geschehen)
 
   Future<void> _getCurrentTee() async {
-  //Future<int> _getCurrentTee() async {
+    //Future<int> _getCurrentTee() async {
     final hasPermission = await _handleLocationPermission();
 
     if (!hasPermission) return;
@@ -69,25 +132,40 @@ class _LocationWidgetState extends State<LocationWidget> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    Logger.level = Level.debug;
+    final log = getLogger();
+
+    String file;
+    bool test = true;
+
+    if (test) {
+      file = testFile;
+    } else {
+      file = rhgcFile;
+    }
+
+    readCSV(file);
+    // currentPosition.latitude and currentPosition.longitude
+    final currentTee = showNearestTee(locationLatLon, 37.4, -0.25);
+    log.d(currentTee);
+
+    return Center(
+      child: Row(
+        children: <Widget>[
         Align(
           alignment: Alignment.bottomRight,
           child: IconButton(
             icon: Icon(Icons.arrow_drop_down),
-            iconSize: 36,
+            iconSize: 56,
             color: Colors.white,
             onPressed: _getCurrentPosition,
-            ),
           ),
-        Text('Breite: ${currentPosition?.latitude ?? ""}',
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8),),
-        Text('Länge:  ${currentPosition?.longitude ?? ""}',
-          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8),),
+        ),
+          Text(currentTee, style: normalStyle),
       ],
+      ),
     );
   }
 }

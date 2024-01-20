@@ -1,4 +1,3 @@
-import 'package:approx_teeone/locationWidget.dart';
 import 'package:approx_teeone/selectANumberWidget.dart';
 import 'package:approx_teeone/showResultWidget.dart';
 import 'package:approx_teeone/showATimeWidget.dart';
@@ -6,11 +5,10 @@ import 'package:approx_teeone/inputTeeWidget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:approx_teeone/logger.util.dart';
-import 'package:csv/csv.dart';
 
 void main() {
   Logger.level = Level.debug;
@@ -36,7 +34,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-   const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -105,54 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedValue = '';
   String auswahl = '10 Min.';
 
-  String version = '1.3.2';
-  bool test = true;
-
-  String testFile = 'assets/files/test_location.csv';
-  String rhgcFile = 'assets/files/rhgc_koordinaten.csv';
-
-  Position? aPosition;
-
-  List<List<dynamic>> locationLatLon = [];
-
-  void readCSV(String file_name) async {
-    final rawdata = await rootBundle.loadString(file_name);
-    List<List<dynamic>> _listData = const CsvToListConverter().convert(rawdata);
-    setState(() {
-      locationLatLon = _listData;
-    });
-  }
-
-  String showNearestTee(
-      List<List<dynamic>> positionList, double lat, double lon) {
-
-    final log = getLogger();
-    String ergebnis = '1';
-    double distance = 1000000000.0;
-    double aPositionLat;
-    double aPositionLon;
-
-    int zeile = 0;
-    for (final positionOfATee in positionList) {
-      if (zeile > 0) {
-        var aTee = positionOfATee;
-
-        aPositionLat = aTee[1];
-        aPositionLon = aTee[2];
-
-        double calculatedDistance =
-            Geolocator.distanceBetween(aPositionLat, aPositionLon, lat, lon);
-
-        // if (calculatedDistance < distance) {
-        //  distance = calculatedDistance;
-        //  ergebnis = aTee[0];
-        //}
-      }
-      zeile = zeile + 1;
-    }
-
-    return ergebnis;
-  }
+  String version = '1.3.9';
+  // show current Tee
 
   @override
   void dispose() {
@@ -190,10 +142,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    readCSV(testFile);
-    // currentPosition.latitude and currentPosition.longitude
-    final currentTee = showNearestTee(locationLatLon, 130.0, -0.23);
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -242,8 +190,6 @@ class _MyHomePageState extends State<MyHomePage> {
               uhrzeit: playedTime.toString() + ' Min.',
               aColor: timeColor,
             ),
-            Text(locationLatLon.toString()),
-            Text(currentTee),
             Text(version),
           ],
         ),
