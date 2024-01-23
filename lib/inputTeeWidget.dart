@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:approx_teeone/aThemeWidget.dart';
 import 'package:approx_teeone/locationWidget.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +18,7 @@ class NumericalRangeFormatter extends TextInputFormatter {
     if (newValue.text == '') {
       return newValue;
     } else if (int.parse(newValue.text) < min) {
-      return TextEditingValue().copyWith(text: min.toStringAsFixed(2));
+      return const TextEditingValue().copyWith(text: min.toStringAsFixed(2));
     } else {
       return int.parse(newValue.text) > max ? oldValue : newValue;
     }
@@ -32,7 +32,7 @@ class inputTeeWidget extends StatelessWidget {
   final TextEditingController aFunction;
   final Color? aColor;
 
-  inputTeeWidget({
+  const inputTeeWidget({
     required this.text,
     required this.normalStyle,
     required this.resultStyle,
@@ -57,7 +57,7 @@ class inputTeeWidget extends StatelessWidget {
             keyboardType: TextInputType.number,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 38.0,
           child: Text(''),
         ),

@@ -7,9 +7,9 @@ class showATimeWidget extends StatelessWidget {
   final TextStyle normalStyle;
   final TextStyle resultStyle;
   final String uhrzeit;
-  final aColor;
+  final Color? aColor;
 
-  showATimeWidget({
+  const showATimeWidget({
     required this.text,
     required this.normalStyle,
     required this.resultStyle,

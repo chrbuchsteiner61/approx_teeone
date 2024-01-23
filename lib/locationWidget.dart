@@ -15,8 +15,8 @@ class _LocationWidgetState extends State<LocationWidget> {
   Position? currentPosition;
   String? currentTee;
 
-  TextStyle normalStyle =
-      TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white);
+  TextStyle normalStyle = const TextStyle(
+      fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white);
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -71,7 +71,7 @@ class _LocationWidgetState extends State<LocationWidget> {
     log.d(currentPosition);
   }
 
-  bool test = true;
+  bool test = false;
 
   String testFile = 'assets/files/test_location.csv';
   String rhgcFile = 'assets/files/rhgc_koordinaten.csv';
@@ -112,7 +112,8 @@ class _LocationWidgetState extends State<LocationWidget> {
         double calculatedDistance =
             Geolocator.distanceBetween(aPositionLat, aPositionLon, lat, lon);
 
-        // log.d(calculatedDistance);
+        //log.d(aTee[0]);
+        //log.d(calculatedDistance / 1000.0);
 
         if (calculatedDistance < distance) {
           distance = calculatedDistance;
@@ -130,13 +131,14 @@ class _LocationWidgetState extends State<LocationWidget> {
     final log = getLogger();
 
     String file;
-    bool test = true;
 
     if (test) {
       file = testFile;
     } else {
       file = rhgcFile;
     }
+
+    //log.d(file);
 
     readCSV(file);
 

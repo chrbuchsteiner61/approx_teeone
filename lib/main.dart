@@ -4,7 +4,6 @@ import 'package:approx_teeone/showATimeWidget.dart';
 import 'package:approx_teeone/inputTeeWidget.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -105,8 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedValue = '';
   String auswahl = '10 Min.';
 
-  String version = '1.3.9';
-  // show current Tee
+  String version = '1.4.0';
+  // show and calculate nearest Tee
 
   @override
   void dispose() {
