@@ -18,6 +18,8 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  final String appTitle = 'Erster Abschlag wann?';
+
 // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'RadioCanada',
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Erster Abschlag wann?'),
+      home: MyHomePage(title: appTitle),
     );
   }
 }

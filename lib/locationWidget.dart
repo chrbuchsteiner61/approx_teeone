@@ -12,10 +12,11 @@ class LocationWidget extends StatefulWidget {
 }
 
 class _LocationWidgetState extends State<LocationWidget> {
-  // String? _currentAddress;
   Position? currentPosition;
+  String? currentTee;
 
-  TextStyle normalStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white);
+  TextStyle normalStyle =
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white);
 
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
@@ -48,6 +49,7 @@ class _LocationWidgetState extends State<LocationWidget> {
 
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
+    String aTee;
 
     Logger.level = Level.debug;
     final log = getLogger();
@@ -55,7 +57,13 @@ class _LocationWidgetState extends State<LocationWidget> {
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() => currentPosition = position);
+      // setState(() => currentPosition = position);
+      aTee =
+          showNearestTee(locationLatLon, position.latitude, position.longitude);
+      setState(() {
+        currentPosition = position;
+        currentTee = aTee;
+      });
     }).catchError((e) {
       debugPrint(e);
     });
@@ -116,22 +124,6 @@ class _LocationWidgetState extends State<LocationWidget> {
     return _ergebnis;
   }
 
-  // vergleiche die Positionen aller Abschlaege mit der aktuellen Position
-  // erforderlich: lies alle Abschlagspositionen ein (sollte in main.dart initial geschehen)
-
-  Future<void> _getCurrentTee() async {
-    //Future<int> _getCurrentTee() async {
-    final hasPermission = await _handleLocationPermission();
-
-    if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
-      setState(() => currentPosition = position);
-    }).catchError((e) {
-      debugPrint(e);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     Logger.level = Level.debug;
@@ -147,24 +139,25 @@ class _LocationWidgetState extends State<LocationWidget> {
     }
 
     readCSV(file);
+
     // currentPosition.latitude and currentPosition.longitude
-    final currentTee = showNearestTee(locationLatLon, 37.4, -0.25);
-    log.d(currentTee);
+    //final currentTee = showNearestTee(locationLatLon, 37.4, -0.25);
+    //log.d(currentTee);
 
     return Center(
       child: Row(
         children: <Widget>[
-        Align(
-          alignment: Alignment.bottomRight,
-          child: IconButton(
-            icon: Icon(Icons.arrow_drop_down),
-            iconSize: 56,
-            color: Colors.white,
-            onPressed: _getCurrentPosition,
+          Align(
+            alignment: Alignment.bottomRight,
+            child: IconButton(
+              icon: Icon(Icons.arrow_drop_down),
+              iconSize: 56,
+              color: Colors.white,
+              onPressed: _getCurrentPosition,
+            ),
           ),
-        ),
-          Text(currentTee, style: normalStyle),
-      ],
+          Text(currentTee ?? '?', style: normalStyle),
+        ],
       ),
     );
   }
