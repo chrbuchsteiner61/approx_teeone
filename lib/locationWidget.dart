@@ -59,7 +59,7 @@ class _LocationWidgetState extends State<LocationWidget> {
         .then((Position position) {
       // setState(() => currentPosition = position);
       aTee =
-          showNearestTee(locationLatLon, position.latitude, position.longitude);
+          showNearestTee(locationLatLon, position.latitude, position.longitude, test);
       setState(() {
         currentPosition = position;
         currentTee = aTee;
@@ -68,7 +68,7 @@ class _LocationWidgetState extends State<LocationWidget> {
       debugPrint(e);
     });
 
-    log.d(currentPosition);
+    //log.d(currentPosition);
   }
 
   bool test = false;
@@ -92,7 +92,7 @@ class _LocationWidgetState extends State<LocationWidget> {
   }
 
   String showNearestTee(
-      List<List<dynamic>> positionList, double lat, double lon) {
+      List<List<dynamic>> positionList, double lat, double lon, bool test) {
     final log = getLogger();
 
     String _ergebnis = '1';
@@ -113,6 +113,8 @@ class _LocationWidgetState extends State<LocationWidget> {
             Geolocator.distanceBetween(aPositionLat, aPositionLon, lat, lon);
 
         //log.d(aTee[0]);
+        //log.d(lat);
+        //log.d(lon);
         //log.d(calculatedDistance / 1000.0);
 
         if (calculatedDistance < distance) {
@@ -138,7 +140,7 @@ class _LocationWidgetState extends State<LocationWidget> {
       file = rhgcFile;
     }
 
-    //log.d(file);
+   // log.d(file);
 
     readCSV(file);
 
