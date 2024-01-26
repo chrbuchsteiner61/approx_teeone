@@ -104,8 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
   String selectedValue = '';
   String auswahl = '10 Min.';
 
-  String version = '1.4.0';
+  String version = '1.4.1';
   // show and calculate nearest Tee
+  // file with lat and lon adjusted
 
   @override
   void dispose() {

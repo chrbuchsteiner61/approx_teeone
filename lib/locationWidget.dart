@@ -95,6 +95,12 @@ class _LocationWidgetState extends State<LocationWidget> {
       List<List<dynamic>> positionList, double lat, double lon, bool test) {
     final log = getLogger();
 
+    if (test) {
+      // value of tee 9
+      lat = 50.25282777777778;
+      lon = 8.576136111111111;
+    }
+
     String _ergebnis = '1';
     double distance = 1000000000.0;
     double aPositionLat;
