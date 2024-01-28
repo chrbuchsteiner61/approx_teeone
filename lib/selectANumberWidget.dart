@@ -61,7 +61,8 @@ class _selectANumberWidgetState extends State<selectANumberWidget> {
         Text(text, style: normalStyle),
         SizedBox(
           width: 150.0,
-          child: DropdownButton<String>(
+          child: DropdownButtonHideUnderline (
+            child: DropdownButton<String>(
             value: dropdownValue,
             isExpanded: true,
             icon: const Icon(Icons.arrow_drop_down_circle_outlined, size: 48.0, color: Colors.white,),
@@ -84,6 +85,7 @@ class _selectANumberWidgetState extends State<selectANumberWidget> {
               );
             }).toList(),
           ),
+        ),
         ),
       ]),
     );
