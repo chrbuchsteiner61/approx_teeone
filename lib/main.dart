@@ -44,12 +44,12 @@ class MyHomePage extends StatefulWidget {
         currentTime: DateTime.now(),
         approxTeeOne: DateTime.now(),
         minuteFormatter: NumberFormat("00"),
-        uhrzeit: 'Knopf drücken',
+        timeOfDay: 'Knopf drücken',
         showApproxTime: 'Zu berechnen',
         tee: "1",
         delta: "10",
         playedTime: 0,
-        startAbstaende: [' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.', '15 Min.'],
+        startInterval: [' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.', '15 Min.'],
         containerHeight: 80,
       );
 }
@@ -59,14 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
   DateTime approxTeeOne;
   NumberFormat minuteFormatter;
 
-// Uhrzeiten umgewandelt in Strings
-  String uhrzeit;
+  String timeOfDay;
   String showApproxTime;
   String tee;
   String delta;
   int playedTime;
 
-  List<String> startAbstaende;
+  List<String> startInterval;
 
   double containerHeight;
 
@@ -74,12 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
     required this.currentTime,
     required this.approxTeeOne,
     required this.minuteFormatter,
-    required this.uhrzeit,
+    required this.timeOfDay,
     required this.showApproxTime,
     required this.tee,
     required this.delta,
     required this.playedTime,
-    required this.startAbstaende,
+    required this.startInterval,
     required this.containerHeight,
   });
 
@@ -98,25 +97,25 @@ class _MyHomePageState extends State<MyHomePage> {
   Color? inputColor = Colors.green[500];
   Color? timeColor = Colors.green[700];
 
-  final myControllerAbstand = TextEditingController();
+  final myControllerStartInterval = TextEditingController();
   final myControllerTee = TextEditingController();
 
   String selectedValue = '';
-  String auswahl = '10 Min.';
+  String selection = '10 Min.';
 
   String version = '1.4.2';
   // no underlines for input
 
   @override
   void dispose() {
-    myControllerAbstand.dispose();
+    myControllerStartInterval.dispose();
     myControllerTee.dispose();
     super.dispose();
   }
 
-  void callbackForDropdown(String gewaehlterAbschlag) {
+  void callbackForDropdown(String selectedTee) {
     setState(() {
-      auswahl = gewaehlterAbschlag;
+      selection = selectedTee;
     });
   }
 
@@ -127,12 +126,11 @@ class _MyHomePageState extends State<MyHomePage> {
 // show time
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
-//delta = myControllerAbstand.text;
-      selectedValue = auswahl;
+      selectedValue = selection;
       delta = selectedValue.replaceAll(' Min.', '');
       tee = myControllerTee.text;
       currentTime = DateTime.now();
-      uhrzeit =
+      timeOfDay =
           '${currentTime.hour}:${minuteFormatter.format(currentTime.minute)}';
       playedTime = int.parse(delta.trimLeft()) * int.parse(tee);
       approxTeeOne = currentTime.subtract(Duration(minutes: playedTime));
@@ -157,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
               text: 'Aktuell     ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
-              uhrzeit: uhrzeit,
+              aTimeOfTheDay: timeOfDay,
               aColor: timeColor,
             ),
             showResultWidget(
@@ -171,10 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
               normalStyle: normalStyle,
               aColor: inputColor,
               text: 'Abstand:   ',
-              list: startAbstaende,
-              dropdownValue: startAbstaende[2],
-              onChildChanged: (String auswahlInChild) {
-                callbackForDropdown(auswahlInChild);
+              list: startInterval,
+              dropdownValue: startInterval[2],
+              onChildChanged: (String selectionInChild) {
+                callbackForDropdown(selectionInChild);
               },
             ),
             inputTeeWidget(
@@ -188,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
               text: 'approx. Spielzeit:   ',
               normalStyle: normalStyle,
               resultStyle: resultStyle,
-              uhrzeit: playedTime.toString() + ' Min.',
+              aTimeOfTheDay: playedTime.toString() + ' Min.',
               aColor: timeColor,
             ),
             Text(version),

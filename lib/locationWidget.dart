@@ -101,7 +101,7 @@ class _LocationWidgetState extends State<LocationWidget> {
       lon = 8.576136111111111;
     }
 
-    String _ergebnis = '1';
+    String _foundTee = '1';
     double distance = 1000000000.0;
     double aPositionLat;
     double aPositionLon;
@@ -125,12 +125,12 @@ class _LocationWidgetState extends State<LocationWidget> {
 
         if (calculatedDistance < distance) {
           distance = calculatedDistance;
-          _ergebnis = aTee[0].toString();
+          _foundTee = aTee[0].toString();
         }
       }
     }
 
-    return _ergebnis;
+    return _foundTee;
   }
 
   @override
@@ -160,7 +160,7 @@ class _LocationWidgetState extends State<LocationWidget> {
           Align(
             alignment: Alignment.bottomRight,
             child: IconButton(
-              icon: Icon(Icons.arrow_drop_down),
+              icon: const Icon(Icons.arrow_drop_down),
               iconSize: 56,
               color: Colors.white,
               onPressed: _getCurrentPosition,

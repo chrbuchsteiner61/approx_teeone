@@ -4,7 +4,7 @@ import 'aThemeWidget.dart';
 
 //const List<String> list = <String>[' 5 Min.', ' 8 Min.', '10 Min.', '12 Min.'];
 
-typedef void IntCallback(String auswahl);
+typedef void IntCallback(String selectedTee);
 
 class selectANumberWidget extends StatefulWidget {
   final IntCallback onChildChanged;

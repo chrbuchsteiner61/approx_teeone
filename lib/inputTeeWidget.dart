@@ -49,7 +49,7 @@ class inputTeeWidget extends StatelessWidget {
         SizedBox(
           width: 48.0,
           child: TextField(
-            decoration: InputDecoration(border: InputBorder.none),
+            decoration: const InputDecoration(border: InputBorder.none),
             inputFormatters: [
               NumericalRangeFormatter(min: 1, max: 18),
             ],

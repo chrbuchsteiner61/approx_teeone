@@ -6,14 +6,14 @@ class showATimeWidget extends StatelessWidget {
   final String text;
   final TextStyle normalStyle;
   final TextStyle resultStyle;
-  final String uhrzeit;
+  final String aTimeOfTheDay;
   final Color? aColor;
 
   const showATimeWidget({
     required this.text,
     required this.normalStyle,
     required this.resultStyle,
-    required this.uhrzeit,
+    required this.aTimeOfTheDay,
     required this.aColor,
   });
 
@@ -26,7 +26,7 @@ class showATimeWidget extends StatelessWidget {
               Text(text, style: normalStyle,
               ),
               Text(
-                uhrzeit,
+                aTimeOfTheDay,
                 style: resultStyle,
               )
             ],
